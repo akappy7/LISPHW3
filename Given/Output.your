@@ -1,0 +1,17 @@
+;; Dribble of #<io terminal-stream> started on 2014-11-20 03:09:35.
+
+          BEGIN TESTING
+
+
+                    TEST-DOUBLE
+
+
+                              TEST-A-DOUBLE on:  double-recursive
+
+testing:  (double-fun nil)
+value:    nil
+
+testing:  (double-fun 44)
+value:    
+*** - car: 44 is not a list
+
