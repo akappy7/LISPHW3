@@ -47,24 +47,24 @@
 						(equal 'if (car y))
 						(append
 							'(cond) ;need to check if last element is list, atom, or even exists vvv
-							(list (list (rewrite (cadr y)) (rewrite(caddr y))) 
+							(append (list (list (rewrite (cadr y)) (rewrite(caddr y))) )
 								(cond
 									(
-										(equal (length y) 4) ;y has an else statement <- need to provide a case for no else statement
+										(equal (length y) 4) ;y has an else statement
 										(cond
 											(
 												(atom (cadddr y)) ;length of else statement is 1, is an atom
-												(list 'T (cadddr y)) ;is an atom, wont recurse
+												(list(list 'T (cadddr y))) ;is an atom, wont recurse
 											)
 											(
 												'T ;length is not 1, else is an s expression, must recurse
-												(list 'T (rewrite (cadddr y))) 
+												(list(list 'T (rewrite (cadddr y))))
 											)
 										)
 									)
 									(;no else statement, generates an explicit nil return if statement is false
 										'T ;^^^^ need a better way
-										(list 'T NIL)
+										'()
 									)
 								)
 							)
@@ -76,7 +76,7 @@
 					)
 				)
 			)
-			(
+			( ;current element is an s expression, must break apart and recurse
 				(not (atom (car y)))
 				(cons (rewrite(car y)) (rewrite(cdr y)))
 			)
