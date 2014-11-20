@@ -15,3 +15,20 @@
 	)
 
 )
+
+(defun rdouble (y)
+	(cond(
+		(not (null y))
+		(cond
+			(
+				(atom (car y))
+				(cons (car y) (cons (car y) (rdouble (cdr y))))
+			)
+			(
+				(not (atom (car y)))
+				(cons (rdouble (car y)) (rdouble (cdr y)))
+			)
+		)
+	))
+)
+
