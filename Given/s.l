@@ -11,7 +11,7 @@
 			(ret NIL (cons (nth index y) (cons (nth index y) ret)))
 			(index 0 (+ index 1))
 		)
-			((null (nth index y)) (reverse ret))
+			((equal index (length y)) (reverse ret))
 	)
 
 )
@@ -85,7 +85,9 @@
 )
 
 (defun check(y)
-	
-
-
+	(list
+		(equal (eval (rewrite y)) (eval y ) )
+		(eval y)
+		(eval (rewrite y))
+	)
 )
