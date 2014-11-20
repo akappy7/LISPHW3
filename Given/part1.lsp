@@ -1,8 +1,15 @@
 (defun double-recursive (y)
-	(cond(
-		(not (null y))
-		(concatenate 'list (list (car y) (car y)) (double-recursive(cdr y)) )
-	))
+  (cond
+  	(
+      (not (atom y))
+    	(cond
+    		(
+					(not (null y))
+					(append (list (car y) (car y)) (double-recursive(cdr y)) )
+				)
+		  )
+  	)
+  )
 )
 
 (defun double-iterative (y)
@@ -13,5 +20,10 @@
 		)
 			((null (nth index y)) (reverse ret))
 	)
+
+)
+(defun double-mapcar (y)
+    (apply #'append (mapcar #'list y y ))
+
 
 )
