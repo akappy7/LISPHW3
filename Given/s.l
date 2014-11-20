@@ -32,3 +32,54 @@
 	))
 )
 
+(defun rewrite (y) 
+	(cond(
+		(not (null y))
+		(cond
+			(
+				(atom y)
+				y
+			)
+			(
+				(atom (car y))
+				(cond
+					(;if the s-expression is an if
+						(equal 'if (car y))
+						(append
+							'(cond) ;need to check if last element is list, atom, or even exists vvv
+							(list (list (rewrite (cadr y)) (rewrite(caddr y))) 
+								(cond
+									(
+										(equal (length y) 4) ;y has an else statement <- need to provide a case for no else statement
+										(cond
+											(
+												(atom (cadddr y)) ;length of else statement is 1, is an atom
+												(list 'T (cadddr y)) ;is an atom, wont recurse
+											)
+											(
+												'T ;length is not 1, else is an s expression, must recurse
+												(list 'T (rewrite (cadddr y))) 
+											)
+										)
+									)
+									(;no else statement, generates an explicit nil return if statement is false
+										'T ;^^^^ need a better way
+										(list 'T NIL)
+									)
+								)
+							)
+						)
+					)
+					(
+						'T ;if the atom is not an if continue copying
+						(cons (car y) (rewrite (cdr y)))
+					)
+				)
+			)
+			(
+				(not (atom (car y)))
+				(cons (rewrite(car y)) (rewrite(cdr y)))
+			)
+		))
+	)
+)
